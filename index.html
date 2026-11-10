@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOLIO — Digital Reading, Book Summaries & Writers Community</title>
+  <meta name="description" content="An elegant literary sanctuary combining public domain classics, 5-minute modern book summaries, Web Speech audiobook reading, and a local writers community.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Preload fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body data-reader-theme="light">
+
+  <!-- ======================================================================
+       HEADER / TOP NAVIGATION
+       ====================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <!-- Brand Logo -->
+      <a href="#classics" class="brand-logo" id="brand-logo" aria-label="Folio Home">
+        <div class="brand-icon">F</div>
+        <div class="brand-text-wrap">
+          <span class="brand-title">FOLIO</span>
+          <span class="brand-tagline">Literary Sanctuary</span>
+        </div>
+      </a>
+
+      <!-- Desktop & Mobile Navigation Links -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+        <button type="button" class="nav-link active" data-tab="classics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>Free Classics</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="summaries">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <span>Book Summaries</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="community">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span>Writers Community</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="bookshelf">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          <span>My Bookshelf</span>
+          <span class="badge-count" id="bookshelf-count">0</span>
+        </button>
+      </nav>
+
+      <!-- Search Trigger & Mobile Toggle -->
+      <div class="header-actions">
+        <button type="button" class="search-trigger-btn" id="search-trigger-btn" aria-label="Open Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Search library...</span>
+          <kbd class="search-shortcut-badge">/</kbd>
+        </button>
+
+        <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       HERO / WELCOME SECTION
+       ====================================================================== -->
+  <section class="hero-section" id="hero-banner">
+    <div class="container hero-content">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        <span>All-in-One Digital Literary Platform</span>
+      </div>
+      <h1 class="hero-title">
+        Where Timeless Classics Meet <span>Modern Minds.</span>
+      </h1>
+      <p class="hero-description">
+        Immerse yourself in authentic public-domain masterpieces, master key ideas from modern non-fiction in five-minute distillations, listen along with browser-native speech, and publish your own writing.
+      </p>
+
+      <div class="hero-cta-group">
+        <button type="button" class="btn btn-primary" onclick="app.switchTab('classics')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Browse Free Classics
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="app.switchTab('summaries')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Read 5-Min Summaries
+        </button>
+        <button type="button" class="btn btn-outline" onclick="app.switchTab('community')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Join Writers Community
+        </button>
+      </div>
+
+      <!-- Hero Features Highlights -->
+      <div class="hero-features">
+        <div class="hero-feature-item">
+          <div class="hero-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <div>
+            <div class="hero-feature-title">Public Domain</div>
+            <div class="hero-feature-subtitle">Authentic unabridged texts</div>
+          </div>
+        </div>
+        <div class="hero-feature-item">
+          <div class="hero-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></svg>
+          </div>
+          <div>
+            <div class="hero-feature-title">5-Min Summaries</div>
+            <div class="hero-feature-subtitle">Concise actionable lessons</div>
+          </div>
+        </div>
+        <div class="hero-feature-item">
+          <div class="hero-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+          </div>
+          <div>
+            <div class="hero-feature-title">Web Speech Audio</div>
+            <div class="hero-feature-subtitle">Built-in voice narration</div>
+          </div>
+        </div>
+        <div class="hero-feature-item">
+          <div class="hero-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div>
+            <div class="hero-feature-title">My Bookshelf</div>
+            <div class="hero-feature-subtitle">Saved locally in browser</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       MAIN VIEWS CONTAINER
+       ====================================================================== -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- ==================================================================
+           VIEW 1: FREE CLASSICS (PUBLIC DOMAIN)
+           ================================================================== -->
+      <section id="view-classics" class="view-section active">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="section-kicker">Heritage & Literature</span>
+            <h2 class="section-title">Free Public Domain Classics</h2>
+            <p class="section-subtitle">
+              Treasured literary works legally free in the public domain. Read full chapter excerpts in our distraction-free reader or listen along with browser audio.
+            </p>
+          </div>
+        </div>
+
+        <!-- Classics Cards Grid -->
+        <div class="books-grid" id="classics-grid">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           VIEW 2: BOOK SUMMARIES (MODERN NON-FICTION)
+           ================================================================== -->
+      <section id="view-summaries" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="section-kicker">Curated Distillations</span>
+            <h2 class="section-title">5-Minute Modern Summaries</h2>
+            <p class="section-subtitle">
+              High-impact original summaries covering psychology, productivity, and personal philosophy. Grasp the core ideas and practical exercises in minutes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Summaries Cards Grid -->
+        <div class="books-grid" id="summaries-grid">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           VIEW 3: WRITERS COMMUNITY & STORIES
+           ================================================================== -->
+      <section id="view-community" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="section-kicker">Creative Sanctuary</span>
+            <h2 class="section-title">Writers Community & Stories</h2>
+            <p class="section-subtitle">
+              Publish your stories, craft your chapters, read works contributed by fellow storytellers, and converse in the local writers' lounge.
+            </p>
+          </div>
+        </div>
+
+        <div class="community-layout">
+          <!-- Left: Story Publisher Form -->
+          <div class="publish-card">
+            <div class="publish-card-header">
+              <h3>Publish a New Story or Chapter</h3>
+              <p>Your work is saved locally in your browser and instantly added to the community feed.</p>
+            </div>
+
+            <form id="story-publish-form" onsubmit="app.handleStoryPublish(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="story-title">Story / Book Title *</label>
+                  <input type="text" id="story-title" placeholder="e.g. The Glass Observatory" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="story-author">Author Display Name *</label>
+                  <input type="text" id="story-author" placeholder="e.g. Rowan Sterling" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="story-genre">Genre / Category *</label>
+                  <select id="story-genre" required>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="Mystery & Suspense">Mystery & Suspense</option>
+                    <option value="Historical Fiction">Historical Fiction</option>
+                    <option value="Poetry & Prose">Poetry & Prose</option>
+                    <option value="Essay & Philosophy">Essay & Philosophy</option>
+                    <option value="Personal Growth">Personal Growth</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="story-chapter-title">Chapter Title (Optional)</label>
+                  <input type="text" id="story-chapter-title" placeholder="e.g. Chapter 1: The First Spark">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="story-content">Chapter Content *</label>
+                <textarea id="story-content" class="form-textarea" placeholder="Pour your prose here. Tell a compelling story..." required></textarea>
+                <div class="form-meta-counter">
+                  <span id="word-count-badge">0 words</span>
+                  <span id="reading-time-badge">~0 min read</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; margin-top: 1.5rem;">
+                <button type="button" class="btn btn-outline" onclick="app.fillSampleDraft()" style="font-size: 0.85rem; padding: 0.6rem 1rem;">
+                  Fill Sample Draft
+                </button>
+                <button type="submit" class="btn btn-primary" id="publish-submit-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  Publish Story
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right: Mock Writers Lounge (Local Chat) -->
+          <div class="lounge-card" id="lounge-card">
+            <div class="lounge-header">
+              <div>
+                <h3 class="lounge-title">Writers Lounge</h3>
+                <span class="lounge-disclaimer-pill">Local Demo • Browser Persisted</span>
+              </div>
+              <button type="button" class="btn-delete" onclick="app.resetChat()" title="Reset Chat to Initial Seeds">
+                Reset
+              </button>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div class="chat-messages-container" id="chat-messages-container">
+              <!-- Rendered via script.js -->
+            </div>
+
+            <!-- Chat Input Box -->
+            <form class="chat-input-bar" id="chat-form" onsubmit="app.handleChatMessage(event)">
+              <input type="text" id="chat-input-text" placeholder="Share your writing thoughts..." autocomplete="off" required>
+              <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Community Stories Feed -->
+        <div class="community-feed-header">
+          <div>
+            <h3 style="font-family: var(--font-serif-display); font-size: 1.5rem; color: var(--forest-dark);">Published Community Stories</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Stories written and saved right here in your browser.</p>
+          </div>
+        </div>
+
+        <div class="community-feed-grid" id="community-stories-grid">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           VIEW 4: MY BOOKSHELF (PERSONAL LIBRARY)
+           ================================================================== -->
+      <section id="view-bookshelf" class="view-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="section-kicker">Personal Collection</span>
+            <h2 class="section-title">My Bookshelf</h2>
+            <p class="section-subtitle">
+              Your saved classics, book summaries, and community stories in one place.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bookshelf Filter Toolbar -->
+        <div class="bookshelf-toolbar">
+          <div class="filter-pills" id="bookshelf-filter-pills">
+            <button type="button" class="filter-pill-btn active" data-filter="all">All Saved (<span id="count-all">0</span>)</button>
+            <button type="button" class="filter-pill-btn" data-filter="classic">Classics (<span id="count-classic">0</span>)</button>
+            <button type="button" class="filter-pill-btn" data-filter="summary">Summaries (<span id="count-summary">0</span>)</button>
+            <button type="button" class="filter-pill-btn" data-filter="community">Community (<span id="count-community">0</span>)</button>
+          </div>
+
+          <button type="button" class="btn btn-outline" onclick="app.clearAllBookmarks()" style="font-size: 0.82rem; padding: 0.45rem 0.9rem;">
+            Clear Bookshelf
+          </button>
+        </div>
+
+        <!-- Bookshelf Items Grid -->
+        <div class="books-grid" id="bookshelf-grid">
+          <!-- Populated dynamically via script.js -->
+        </div>
+
+        <!-- Bookshelf Empty State -->
+        <div class="empty-state" id="bookshelf-empty-state" style="display: none;">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <h3 class="empty-state-title">Your bookshelf is waiting for its first story.</h3>
+          <p class="empty-state-desc">Discover something worth reading from our Free Classics collection or modern executive summaries.</p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button type="button" class="btn btn-primary" onclick="app.switchTab('classics')">
+              Browse Classics
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="app.switchTab('summaries')">
+              Explore Summaries
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       DEDICATED FULL READER MODAL (FOR CLASSICS & COMMUNITY STORIES)
+       ====================================================================== -->
+  <div class="reader-modal" id="reader-modal" role="dialog" aria-modal="true" aria-label="Book Reader">
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-track">
+      <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <!-- Reader Top Toolbar -->
+    <header class="reader-toolbar">
+      <div class="reader-toolbar-left">
+        <button type="button" class="reader-close-btn" id="reader-close-btn" onclick="app.closeReader()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span>Exit Reader</span>
+        </button>
+        <div class="reader-book-meta">
+          <span class="reader-book-title" id="reader-book-title">Book Title</span>
+          <span class="reader-book-author" id="reader-book-author">Author Name</span>
+        </div>
+      </div>
+
+      <!-- Center: Chapter Selector Dropdown -->
+      <div class="reader-toolbar-center">
+        <select class="chapter-select" id="reader-chapter-select" onchange="app.handleReaderChapterSelect(this.value)">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+
+      <!-- Right: Reading Controls (Font size, Theme, Audio Toggle) -->
+      <div class="reader-toolbar-right">
+        <!-- Font Size Controls (A- and A+) -->
+        <div class="reader-control-group">
+          <button type="button" class="reader-btn-icon" id="btn-font-decrease" onclick="app.adjustFontSize(-2)" title="Decrease font size">
+            A-
+          </button>
+          <span class="font-size-indicator" id="font-size-val">18px</span>
+          <button type="button" class="reader-btn-icon" id="btn-font-increase" onclick="app.adjustFontSize(2)" title="Increase font size">
+            A+
+          </button>
+        </div>
+
+        <!-- Font Family Toggle (Serif vs Sans) -->
+        <button type="button" class="reader-btn-icon" id="btn-toggle-font-family" onclick="app.toggleFontFamily()" title="Toggle Serif / Sans-serif" style="background: var(--reader-bg); border: 1px solid var(--reader-border);">
+          <span style="font-family: serif; font-size: 1rem;">T</span>
+        </button>
+
+        <!-- Theme Picker (Light / Sepia / Dark) -->
+        <div class="theme-picker">
+          <button type="button" class="theme-opt-btn theme-opt-light active" onclick="app.setReaderTheme('light')" title="Paper Light Theme"></button>
+          <button type="button" class="theme-opt-btn theme-opt-sepia" onclick="app.setReaderTheme('sepia')" title="Vintage Sepia Theme"></button>
+          <button type="button" class="theme-opt-btn theme-opt-dark" onclick="app.setReaderTheme('dark')" title="Obsidian Night Theme"></button>
+        </div>
+
+        <!-- Audiobook Direct Button -->
+        <button type="button" class="btn btn-primary" id="reader-audio-btn" onclick="app.toggleReaderAudio()" style="padding: 0.4rem 0.85rem; font-size: 0.84rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span id="reader-audio-btn-text">Listen</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Reading Body -->
+    <div class="reader-scroll-canvas" id="reader-scroll-canvas" onscroll="app.handleReaderScroll()">
+      <article class="reader-article" id="reader-article">
+        <header class="reader-header-area">
+          <div class="reader-chap-badge" id="reader-display-badge">Chapter</div>
+          <h1 class="reader-chap-title" id="reader-display-title">Chapter Title</h1>
+          <p class="reader-chap-subtitle" id="reader-display-subtitle">Chapter Subtitle</p>
+        </header>
+
+        <!-- Text content with sentence chunks -->
+        <div class="reader-content" id="reader-text-container">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Chapter Navigation Footer -->
+        <footer class="reader-nav-footer">
+          <button type="button" class="btn btn-secondary" id="reader-prev-chap-btn" onclick="app.prevChapter()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Previous Chapter
+          </button>
+          <button type="button" class="btn btn-secondary" id="reader-next-chap-btn" onclick="app.nextChapter()">
+            Next Chapter
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </footer>
+      </article>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       BOOK SUMMARY MODAL (FOR MODERN LITERATURE)
+       ====================================================================== -->
+  <div class="summary-modal" id="summary-modal" role="dialog" aria-modal="true" aria-label="Book Summary">
+    <div class="summary-dialog">
+      <header class="summary-dialog-header">
+        <div class="summary-dialog-title-wrap">
+          <span class="section-kicker" id="summary-genre-pill">Productivity</span>
+          <h2 id="summary-title">Atomic Habits</h2>
+          <p id="summary-author">By James Clear</p>
+          <div class="summary-badges">
+            <span class="book-tag" id="summary-readtime-badge">5 min read</span>
+            <span class="book-tag" id="summary-rating-badge">★ 4.9</span>
+          </div>
+        </div>
+        <button type="button" class="reader-close-btn" onclick="app.closeSummaryModal()" aria-label="Close summary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="summary-dialog-body" id="summary-dialog-body">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+
+      <footer class="summary-dialog-footer">
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <button type="button" class="btn btn-primary" id="summary-listen-btn" onclick="app.playSummaryAudio()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            Listen to Summary
+          </button>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="summary-buy-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            Buy Original Book
+          </a>
+        </div>
+        <button type="button" class="btn btn-outline" onclick="app.closeSummaryModal()">
+          Close
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       AUDIOBOOK CONTROLLER DOCK (FLOATING WEB SPEECH PLAYER)
+       ====================================================================== -->
+  <aside class="audio-dock" id="audio-dock" aria-label="Audiobook Player">
+    <div class="audio-dock-info">
+      <div class="audio-wave-anim" aria-hidden="true">
+        <span class="audio-wave-bar"></span>
+        <span class="audio-wave-bar"></span>
+        <span class="audio-wave-bar"></span>
+        <span class="audio-wave-bar"></span>
+      </div>
+      <div class="audio-meta-text">
+        <div class="audio-track-title" id="audio-track-title">Reading Sherlock Holmes</div>
+        <div class="audio-track-status" id="audio-track-status">Web Speech API • Ready</div>
+      </div>
+    </div>
+
+    <!-- Audio Action Controls -->
+    <div class="audio-controls">
+      <!-- Stop Button -->
+      <button type="button" class="audio-btn" onclick="app.audioPlayer.stop()" title="Stop audio">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
+      </button>
+
+      <!-- Main Play / Pause Button -->
+      <button type="button" class="audio-btn audio-btn-main" id="audio-main-play-btn" onclick="app.handleAudioMainToggle()" title="Play / Pause">
+        <svg id="audio-main-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <svg id="audio-main-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+      </button>
+
+      <!-- Speed Control -->
+      <select class="audio-speed-select" id="audio-speed-select" onchange="app.handleSpeedChange(this.value)" title="Playback Speed">
+        <option value="0.75">0.75x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2.0">2.0x</option>
+      </select>
+
+      <!-- Voice Selector -->
+      <select class="audio-voice-select" id="audio-voice-select" onchange="app.handleVoiceChange(this.value)" title="Voice Selection">
+        <option value="">Default Voice</option>
+      </select>
+
+      <!-- Close Player Dock -->
+      <button type="button" class="audio-close-btn" onclick="app.closeAudioDock()" title="Hide Audio Player">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       SEARCH MODAL
+       ====================================================================== -->
+  <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Search Library">
+    <div class="search-dialog">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input" id="global-search-input" placeholder="Search by title, author, genre, or keyword..." autocomplete="off">
+        <button type="button" class="reader-close-btn" onclick="app.closeSearchModal()" style="padding: 0.35rem 0.75rem;">Esc</button>
+      </div>
+
+      <div class="search-results-list" id="search-results-list">
+        <!-- Live search results or default suggestions -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       LEGAL MODALS (DMCA, TERMS, PRIVACY)
+       ====================================================================== -->
+  <!-- DMCA Modal -->
+  <div class="legal-modal" id="modal-dmca" role="dialog" aria-modal="true" aria-label="DMCA Copyright Report">
+    <div class="legal-dialog">
+      <header class="legal-dialog-header">
+        <h2>DMCA Copyright Notice & Takedown Policy</h2>
+        <button type="button" class="reader-close-btn" onclick="app.closeLegalModal('modal-dmca')">✕</button>
+      </header>
+      <div class="legal-dialog-body">
+        <div class="legal-alert-banner">
+          <strong>Starter Legal Notice:</strong> FOLIO exclusively features literature verified in the public domain and original concise educational commentary. If you believe your copyrighted work has been improperly published, please submit the form below.
+        </div>
+
+        <h3>1. DMCA Notice Requirements</h3>
+        <p>In accordance with 17 U.S.C. § 512(c)(3), an effective copyright notification must include:</p>
+        <ul>
+          <li>Identification of the copyrighted work claimed to have been infringed.</li>
+          <li>Identification of the material that is claimed to be infringing on Folio.</li>
+          <li>Sufficient contact information including your full legal name, email address, and physical address.</li>
+          <li>A statement that you have a good faith belief that the use is not authorized by the copyright owner.</li>
+          <li>A statement made under penalty of perjury that the information provided is accurate.</li>
+        </ul>
+
+        <h3>2. Submit a DMCA Takedown Notice</h3>
+        <form id="dmca-demo-form" onsubmit="app.handleDmcaSubmit(event)" style="background: var(--bg-card-alt); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); margin-top: 1rem;">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="dmca-name">Full Legal Name *</label>
+              <input type="text" id="dmca-name" required placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="dmca-email">Email Address *</label>
+              <input type="email" id="dmca-email" required placeholder="copyright@example.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dmca-work">Original Copyrighted Work Description *</label>
+            <input type="text" id="dmca-work" required placeholder="Title and registration/reference details of your work">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dmca-url">Infringing Content Location on Folio *</label>
+            <input type="text" id="dmca-url" required placeholder="URL or Story Title on Folio">
+          </div>
+          <div class="form-group">
+            <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+              <input type="checkbox" required style="margin-top: 3px;">
+              <span>I state under penalty of perjury that I am the owner or authorized agent, and this notice is accurate and made in good faith.</span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+            Submit DMCA Notice
+          </button>
+        </form>
+
+        <h3 style="margin-top: 1.5rem;">Designated Agent Contact</h3>
+        <p>FOLIO Copyright Agent • Email: <code>copyright-agent@folio-demo.local</code></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div class="legal-modal" id="modal-terms" role="dialog" aria-modal="true" aria-label="Terms of Service">
+    <div class="legal-dialog">
+      <header class="legal-dialog-header">
+        <h2>Terms of Service</h2>
+        <button type="button" class="reader-close-btn" onclick="app.closeLegalModal('modal-terms')">✕</button>
+      </header>
+      <div class="legal-dialog-body">
+        <div class="legal-alert-banner">
+          <strong>Starter Legal Template:</strong> These terms govern your use of the Folio client-side reading and writing application.
+        </div>
+
+        <h3>1. Acceptance of Terms</h3>
+        <p>By browsing, reading, or publishing on Folio, you agree to comply with and be bound by these terms. This application is an educational and cultural reading platform designed to champion public domain literature and reading literacy.</p>
+
+        <h3>2. User-Generated Community Content</h3>
+        <p>Writers who submit stories or chapters to the Writers Community retain their moral and intellectual property rights. By publishing on Folio, you warrant that:</p>
+        <ul>
+          <li>You are the sole author of the submitted content or hold express rights to publish it.</li>
+          <li>Your submission does not infringe upon third-party copyrights, trademarks, or privacy rights.</li>
+          <li>Your submission does not contain unlawful, defamatory, or harmful content.</li>
+        </ul>
+
+        <h3>3. Public Domain Content</h3>
+        <p>Works in the Free Classics section are believed to be in the public domain in the United States and jurisdictions with comparable term laws (author life + 70 to 80 years). Folio respects intellectual property and promptly responds to notices.</p>
+
+        <h3>4. Limitation of Liability</h3>
+        <p>Folio is provided "as is" and "as available" without warranty of any kind. In this client-side release, data is saved locally in browser storage.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div class="legal-modal" id="modal-privacy" role="dialog" aria-modal="true" aria-label="Privacy Policy">
+    <div class="legal-dialog">
+      <header class="legal-dialog-header">
+        <h2>Privacy Policy</h2>
+        <button type="button" class="reader-close-btn" onclick="app.closeLegalModal('modal-privacy')">✕</button>
+      </header>
+      <div class="legal-dialog-body">
+        <div class="legal-alert-banner">
+          <strong>Privacy by Design:</strong> Folio does not transmit your personal reading data, bookmarks, or unpublished drafts to any external server. All state is maintained locally in your browser.
+        </div>
+
+        <h3>1. Information Stored Locally</h3>
+        <p>To provide a persistent personal reading experience without demanding an account sign-in, Folio utilizes your browser's standard <code>localStorage</code> API to store:</p>
+        <ul>
+          <li><strong>Bookmarks:</strong> The IDs of your bookmarked classics, summaries, and stories.</li>
+          <li><strong>Published Stories:</strong> User stories and chapters you compose in the Writers Community.</li>
+          <li><strong>Chat History:</strong> Messages you draft in the local demo Writers Lounge.</li>
+          <li><strong>Reader Preferences:</strong> Selected font size, light/sepia/dark theme preference, and audio speech rate.</li>
+        </ul>
+
+        <h3>2. Zero Third-Party Trackers</h3>
+        <p>Folio does not include advertising pixels, behavioral tracking scripts, or analytics cookies. You have complete control to clear your storage at any time via your browser settings or our one-click Bookshelf clear buttons.</p>
+
+        <h3>3. Future Cloud Integration</h3>
+        <p>When user authentication and cloud synchronization (e.g. Supabase) are introduced in future updates, you will have explicit opt-in choice and comprehensive control over your cloud profile.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Overlay -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#classics" class="brand-logo">
+            <div class="brand-icon">F</div>
+            <div class="brand-text-wrap">
+              <span class="brand-title">FOLIO</span>
+              <span class="brand-tagline">Literary Sanctuary</span>
+            </div>
+          </a>
+          <p>
+            An all-in-one digital reading sanctuary uniting public domain classics, five-minute executive summaries, browser-native audiobook speech, and a supportive writers' community.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="app.switchTab('classics')">Free Classics</a></li>
+            <li><a href="javascript:void(0)" onclick="app.switchTab('summaries')">Book Summaries</a></li>
+            <li><a href="javascript:void(0)" onclick="app.switchTab('community')">Writers Community</a></li>
+            <li><a href="javascript:void(0)" onclick="app.switchTab('bookshelf')">My Bookshelf</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Features</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="app.openSearchModal()">Search Library</a></li>
+            <li><a href="javascript:void(0)" onclick="app.playSampleAudio()">Web Speech Demo</a></li>
+            <li><a href="javascript:void(0)" onclick="app.switchTab('community')">Writers Lounge</a></li>
+            <li><a href="javascript:void(0)" onclick="app.switchTab('community')">Publish Story</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Legal & Trust</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="app.openLegalModal('modal-dmca')">DMCA Copyright Report</a></li>
+            <li><a href="javascript:void(0)" onclick="app.openLegalModal('modal-terms')">Terms of Service</a></li>
+            <li><a href="javascript:void(0)" onclick="app.openLegalModal('modal-privacy')">Privacy Policy</a></li>
+            <li><a href="javascript:void(0)" onclick="app.showStorageInfo()">Data Architecture</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-quote">
+          "A reader lives a thousand lives before he dies. The man who never reads lives only one."
+        </div>
+        <div>
+          &copy; 2026 FOLIO Platform. Client-side edition • No external backend required.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       SCRIPTS
+       ====================================================================== -->
+  <script src="data.js"></script>
+  <script src="storage.js"></script>
+  <script src="speech.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
